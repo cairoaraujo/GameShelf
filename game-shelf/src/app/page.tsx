@@ -2,9 +2,15 @@ import { getGames } from "@/services/games/gamesService";
 import { Game } from "@/services/games/interface";
 import SearchInput from "../components/Search/Search";
 import GameList from "@/components/GameList/GameList";
+import { fetchUsers } from "@/services/users/usersService";
+import { createList, getList } from "@/services/lists/listsService";
 
 export default async function Home() {
   const games: Game[] = await getGames('red dead redemption 2')
+  const users = await fetchUsers()
+  const listas = await getList(1)
+  console.log(listas)
+  console.log(users)
   console.log(games)
   const imagem = games[0].background_image
   return (
