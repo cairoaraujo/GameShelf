@@ -1,4 +1,5 @@
 "use client";
+import { updateList } from "@/services/lists/listsService";
 import { useSearchParams } from "next/navigation";
 
 interface Game {
@@ -26,6 +27,21 @@ export default async function ResultsPage() {
   }
 
   const games = await fetchGames(query);
+
+  async function addGameToListHandler(game: Game){
+    const gameToAdd = [
+      {
+      name: game.name,
+      id: game.id,
+      background_image: game.background_image,
+      },
+    ];
+    console.log(game.name)
+    console.log(game.id)
+    console.log(game.background_image)
+    const updatedList = await updateList(1, gameToAdd );
+    console.log("Updated List:", updatedList);
+  }
 
   return (
     <div className="p-8 bg-stone-900 min-h-screen">
@@ -61,7 +77,7 @@ export default async function ResultsPage() {
             </div>
             <button
               className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
-              onClick={() => alert(`Game "${game.name}" added!`)}
+              onClick={()=>addGameToListHandler(game)}
             >
               Add
             </button>
