@@ -22,8 +22,9 @@ export async function createList(userId: number, listName: string): Promise<{ id
       return null;
     }
 }
-export async function getList(userId: number): Promise<{ id: number; name: string; user_id: number } | null> {
+export async function getAllListsByUser(userId: number): Promise<{ id: number; name: string; user_id: number } | null> {
     try {
+      console.log('acessou getAllListsByUser')
       const response = await fetch(`https://games-shelf-api.fly.dev/users/${userId}/lists`, {
         method: "GET",
         headers: {
@@ -42,6 +43,30 @@ export async function getList(userId: number): Promise<{ id: number; name: strin
       return null;
     }
 }
+
+export async function getListById(listId: number): Promise<{ id: number; name: string; user_id: number } | null> {
+  try {
+    console.log('entrou')
+    const response = await fetch(`https://games-shelf-api.fly.dev/lists/${listId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error fetching list: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to create list:", error);
+    return null;
+  }
+}
+
+
 interface Game {
   id: number;
   name: string;
@@ -55,8 +80,6 @@ export async function updateList(
 ): Promise<{ id: number; name: string; game: string; user_id: number } | null> {
   try {
     console.log('acessou updateList')
-    console.log(listId)
-    console.log(games)
     const gameString = JSON.stringify(games); // Converter array de jogos para string JSON
     console.log(gameString)
     const response = await fetch(`https://games-shelf-api.fly.dev/lists/${listId}`, {

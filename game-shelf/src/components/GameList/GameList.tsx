@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -12,33 +13,23 @@ interface Game {
   background_image: string;
 }
 
-export default function GameList({listTitle}:{listTitle:string}) {
-  const [playedGames, setPlayedGames] = useState<Game[]>([
-    {
-      id: 1,
-      name: "The Witcher 3: Wild Hunt",
-      background_image:
-        "https://upload.wikimedia.org/wikipedia/pt/0/06/TW3_Wild_Hunt.png",
-    },
-    {
-      id: 2,
-      name: "Cyberpunk 2077",
-      background_image:
-        "https://upload.wikimedia.org/wikipedia/pt/0/06/TW3_Wild_Hunt.png",
-    },
-    {
-      id: 3,
-      name: "Red Dead Redemption 2",
-      background_image:
-        "https://upload.wikimedia.org/wikipedia/pt/0/06/TW3_Wild_Hunt.png",
-    },
-    {
-        id: 4,
-        name: "Red Dead Redemption 2",
-        background_image:
-          "https://upload.wikimedia.org/wikipedia/pt/0/06/TW3_Wild_Hunt.png",
-      },
-  ]);
+// eslint-disable-next-line @next/next/no-async-client-component
+export default function GameList({listTitle, gameList}:{listTitle:string, gameList:string}) {
+  console.log('IHAAAUA')
+  console.log(gameList)
+  console.log(listTitle)
+  const [playedGames, setPlayedGames] = useState<Game[]>([]);
+
+  useEffect(() => {
+    try {
+      const parsedGameList = JSON.parse(gameList);
+      if (Array.isArray(parsedGameList)) {
+        setPlayedGames(parsedGameList);
+      }
+    } catch (error) {
+      console.error("Erro ao analisar gameList:", error);
+    }
+  }, [gameList]);
 
   return (
     <div className="p-8 max-w-5xl mx-auto">

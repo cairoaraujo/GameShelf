@@ -1,5 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @next/next/no-async-client-component */
 "use client";
-import { updateList } from "@/services/lists/listsService";
+import { getListById, updateList } from "@/services/lists/listsService";
 import { useSearchParams } from "next/navigation";
 
 interface Game {
@@ -29,17 +31,16 @@ export default async function ResultsPage() {
   const games = await fetchGames(query);
 
   async function addGameToListHandler(game: Game){
-    const gameToAdd = [
+    const list = await getListById(1)
+    const parsedGameList = JSON.parse(list.game)
+    const gameToAdd = 
       {
       name: game.name,
       id: game.id,
       background_image: game.background_image,
-      },
-    ];
-    console.log(game.name)
-    console.log(game.id)
-    console.log(game.background_image)
-    const updatedList = await updateList(1, gameToAdd );
+      }
+    const updatedGameList = [gameToAdd, ...parsedGameList]; 
+    const updatedList = await updateList(1, updatedGameList); 
     console.log("Updated List:", updatedList);
   }
 
