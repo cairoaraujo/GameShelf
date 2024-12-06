@@ -1,5 +1,5 @@
+"use client"
 /* eslint-disable @next/next/no-img-element */
-"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { deleteList, getListById, updateList } from "@/services/lists/listsService";
@@ -11,7 +11,11 @@ interface Game {
   background_image: string;
 }
 
-export default function ListPage({ params }: { params: { listId: number } }) {
+interface ListPageProps {
+  params: { listId: string };
+}
+
+export default function ListPage({ params }: ListPageProps) {
   const { listId } = params;
   const router = useRouter();
   const [list, setList] = useState<List | null>(null);
@@ -23,18 +27,16 @@ export default function ListPage({ params }: { params: { listId: number } }) {
     setTimeout(() => setFeedbackMessage(null), 3000);
   };
 
-  const fetchListData = async (id: number) => {
+  const fetchListData = async (id: string) => {
     try {
-      const list = await getListById(id);
+      const list = await getListById(Number(id));
       setList(list);
-      setGames( list?.game? JSON.parse(list.game) : []);
-      console.log(games)
+      setGames(list?.game ? JSON.parse(list.game) : []);
     } catch (error) {
       console.error("Error fetching list:", error);
       showFeedback("Failed to fetch the list. Please try again.");
     }
   };
-
 
   useEffect(() => {
     if (listId) {
@@ -45,7 +47,7 @@ export default function ListPage({ params }: { params: { listId: number } }) {
 
   const handleDeleteList = async () => {
     try {
-      await deleteList(listId);
+      await deleteList(Number(listId));
       showFeedback("List deleted successfully.");
       router.push("/");
     } catch (error) {
@@ -64,29 +66,31 @@ export default function ListPage({ params }: { params: { listId: number } }) {
       showFeedback("Failed to remove the game. Please try again.");
     }
   };
-  const removeGameFromList = async (listId: number, gameId: number) => {
+
+  const removeGameFromList = async (listId: string, gameId: number) => {
     if (!gameId) return;
-  
+
     try {
-      const list = await getListById(listId);
-  
+      const list = await getListById(Number(listId))
+
       if (!list) {
         showFeedback("The selected list does not exist.");
         return;
       }
       const parsedGameList = list.game ? JSON.parse(list.game) : [];
       const updatedGameList = parsedGameList.filter((game: Game) => game.id !== gameId);
-      
-      await updateList(listId, updatedGameList);
-  
+
+      await updateList(Number(listId), updatedGameList)
+
       const gameToRemove = parsedGameList.find((game: Game) => game.id === gameId);
       showFeedback(`"${gameToRemove?.name}" was removed successfully from the list "${list.name}"!`);
-      
+
     } catch (error) {
       console.error("Error removing game from list:", error);
       showFeedback("Failed to remove the game. Please try again.");
     }
   };
+
   return (
     <div className="p-8 max-w-5xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">{list?.name || "Loading..."}</h2>
