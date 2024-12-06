@@ -8,7 +8,7 @@ export async function createList(userId: number, listName: string): Promise<{ id
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: listName, user_id: userId }),
+        body: JSON.stringify({ name: listName, user_id: userId, game: "[]" }),
       });
   
       if (!response.ok) {

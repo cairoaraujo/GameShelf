@@ -7,6 +7,9 @@ export default function Header() {
         <Link href="/">gameshelf</Link>
       </div>
       <nav className="space-x-4">
+      <Link href="/createList" className="hover:text-gray-300">
+          Create list
+        </Link>
         <Link href="/" className="hover:text-gray-300">
           Home
         </Link>
