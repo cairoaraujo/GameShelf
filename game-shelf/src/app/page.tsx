@@ -21,7 +21,7 @@ export default async function Home() {
       {/*games != undefined ? games[0].name : 'not found'*/}
       {listas?.map((lista) => (
   <div key={lista.id}>
-    <GameList listTitle={lista.name} gameList={lista.game}></GameList>
+    <GameList listId={lista.id} listTitle={lista.name} gameList={lista.game}></GameList>
   </div>
 ))}
     </div>

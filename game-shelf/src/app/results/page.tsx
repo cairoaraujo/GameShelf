@@ -158,12 +158,12 @@ function ResultsPage() {
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h2 className="text-2xl font-bold mb-4">Select a List</h2>
+            <h2 className="text-black text-2xl font-bold mb-4">Select a List</h2>
             <ul className="space-y-2">
               {lists.map((list) => (
                 <li
                   key={list.id}
-                  className="p-2 border rounded hover:bg-gray-100 cursor-pointer"
+                  className="text-black p-2 border rounded hover:bg-gray-100 cursor-pointer"
                   onClick={() => addGameToListHandler(list.id)}
                 >
                   {list.name}

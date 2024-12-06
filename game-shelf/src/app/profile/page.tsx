@@ -77,10 +77,10 @@ export default function Profile() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           ) : (
-            <p className="mt-1 text-lg">{name}</p>
+            <p className="text-black mt-1 text-lg">{name}</p>
           )}
         </div>
 
@@ -91,10 +91,10 @@ export default function Profile() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           ) : (
-            <p className="mt-1 text-lg">{email}</p>
+            <p className="text-black mt-1 text-lg">{email}</p>
           )}
         </div>
 
