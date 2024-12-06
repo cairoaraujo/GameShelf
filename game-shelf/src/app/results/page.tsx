@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-async-client-component */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { getAllListsByUser, getListById, updateList } from "@/services/lists/listsService";
 import { useSearchParams } from "next/navigation";
 
@@ -28,7 +28,7 @@ async function fetchGames(query: string): Promise<Game[]> {
   return data.results || [];
 }
 
-export default function ResultsPage() {
+function ResultsPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
   const [games, setGames] = useState<Game[]>([]);
@@ -72,7 +72,7 @@ export default function ResultsPage() {
 
   const addGameToListHandler = async (listId: number) => {
     if (!selectedGame) return;
-  
+
     try {
       const list = await getListById(listId);
 
@@ -88,7 +88,7 @@ export default function ResultsPage() {
       };
       const updatedGameList = [gameToAdd, ...parsedGameList];
       await updateList(listId, updatedGameList);
-  
+
       showFeedback(`"${selectedGame.name}" was added successfully to the list "${list.name}"!`);
       closeModal();
     } catch (error) {
@@ -180,5 +180,13 @@ export default function ResultsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ResultsPageWithSuspense() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResultsPage />
+    </Suspense>
   );
 }
