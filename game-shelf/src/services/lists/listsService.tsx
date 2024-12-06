@@ -67,12 +67,12 @@ export async function getListById(listId: number): Promise<{ id: number; name: s
 }
 
 
-interface Game {
+/*interface Game {
   id: number;
   name: string;
   image: string;
   rating: number;
-}
+}*/
   
 export async function updateList(
   listId: number,

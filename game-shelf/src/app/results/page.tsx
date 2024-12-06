@@ -3,7 +3,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getAllListsByUser, getListById, getLists, updateList } from "@/services/lists/listsService";
+import { getAllListsByUser, getListById, updateList } from "@/services/lists/listsService";
 import { useSearchParams } from "next/navigation";
 
 interface Game {
@@ -99,7 +99,7 @@ export default function ResultsPage() {
   return (
     <div className="p-8 bg-stone-900 min-h-screen">
       <h1 className="mb-6 text-3xl font-bold text-center">
-        Search Results for "{query}"
+        Search Results for {query}
       </h1>
 
       {/* Feedback Message */}
