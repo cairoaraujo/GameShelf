@@ -5,8 +5,14 @@ import { getAllListsByUser } from "@/services/lists/listsService";
 
 export default async function Home() {
   //const games: Game[] = await getGames('red dead redemption 2')
+  interface Lista {
+    id: number;
+    name: string;
+    user_id: number;
+    game: string;
+  }
   const users = await fetchUsers()
-  const listas = await getAllListsByUser(1)
+  const listas:Lista[] = await getAllListsByUser(1)
   console.log(users[0].name)
   return (
     <div className="flex flex-col grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-4 sm:p-20 font-[family-name:var(--font-geist-sans)]">

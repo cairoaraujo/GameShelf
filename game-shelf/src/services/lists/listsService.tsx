@@ -22,26 +22,32 @@ export async function createList(userId: number, listName: string): Promise<{ id
       return null;
     }
 }
-export async function getAllListsByUser(userId: number): Promise<{ id: number; name: string; user_id: number } | null> {
-    try {
-      console.log('acessou getAllListsByUser')
-      const response = await fetch(`https://games-shelf-api.fly.dev/users/${userId}/lists`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error creating list: ${response.statusText}`);
-      }
-  
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Failed to create list:", error);
-      return null;
+export async function getAllListsByUser(userId: number): Promise<
+  { id: number; name: string; user_id: number; game: string }[]
+> {
+  try {
+    console.log("acessou getAllListsByUser");
+    const response = await fetch(`https://games-shelf-api.fly.dev/users/${userId}/lists`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error fetching lists: ${response.statusText}`);
     }
+
+    const data = await response.json();
+    if (!Array.isArray(data)) {
+      throw new Error("Unexpected response format, expected an array.");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch lists:", error);
+    return [];
+  }
 }
 
 export async function getListById(listId: number): Promise<{ id: number; name: string; user_id: number } | null> {
