@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { deleteList, getListById, updateList } from "@/services/lists/listsService";
+import { List } from "@/models/list";
 
 interface Game {
   id: number;
@@ -13,7 +14,7 @@ interface Game {
 export default function ListPage({ params }: { params: { listId: number } }) {
   const { listId } = params;
   const router = useRouter();
-  const [list, setList] = useState<List>(null);
+  const [list, setList] = useState<List | null>(null);
   const [games, setGames] = useState<Game[]>([]);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
@@ -39,6 +40,7 @@ export default function ListPage({ params }: { params: { listId: number } }) {
     if (listId) {
       fetchListData(listId);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listId]);
 
   const handleDeleteList = async () => {
