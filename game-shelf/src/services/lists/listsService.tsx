@@ -1,8 +1,5 @@
 export async function createList(userId: number, listName: string): Promise<{ id: number; name: string; user_id: number } | null> {
     try {
-        console.log('acessou createList')
-        console.log(userId)
-        console.log(listName)
       const response = await fetch(`https://games-shelf-api.fly.dev/users/${userId}/lists`, {
         method: "POST",
         headers: {
@@ -26,7 +23,6 @@ export async function getAllListsByUser(userId: number): Promise<
   { id: number; name: string; user_id: number; game: string }[]
 > {
   try {
-    console.log("acessou getAllListsByUser");
     const response = await fetch(`https://games-shelf-api.fly.dev/users/${userId}/lists`, {
       method: "GET",
       headers: {
@@ -89,9 +85,7 @@ export async function updateList(
   games: { name: string; id: number; background_image: string }[]
 ): Promise<{ id: number; name: string; game: string; user_id: number } | null> {
   try {
-    console.log('acessou updateList')
     const gameString = JSON.stringify(games); // Converter array de jogos para string JSON
-    console.log(gameString)
     const response = await fetch(`https://games-shelf-api.fly.dev/lists/${listId}`, {
       method: "PUT",
       headers: {
@@ -113,4 +107,26 @@ export async function updateList(
     return null;
   }
 }
-  
+
+export async function deleteList(
+  listId: number,
+): Promise<{ id: number; name: string; game: string; user_id: number } | null> {
+  try {
+    const response = await fetch(`https://games-shelf-api.fly.dev/lists/${listId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error deleting list: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to delete list:", error);
+    return null;
+  }
+}
