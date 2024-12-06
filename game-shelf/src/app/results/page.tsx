@@ -72,9 +72,14 @@ export default function ResultsPage() {
 
   const addGameToListHandler = async (listId: number) => {
     if (!selectedGame) return;
-
+  
     try {
       const list = await getListById(listId);
+
+      if (!list) {
+        showFeedback("The selected list does not exist.");
+        return;
+      }
       const parsedGameList = list.game ? JSON.parse(list.game) : [];
       const gameToAdd = {
         name: selectedGame.name,
@@ -83,7 +88,7 @@ export default function ResultsPage() {
       };
       const updatedGameList = [gameToAdd, ...parsedGameList];
       await updateList(listId, updatedGameList);
-
+  
       showFeedback(`"${selectedGame.name}" was added successfully to the list "${list.name}"!`);
       closeModal();
     } catch (error) {
