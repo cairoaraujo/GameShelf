@@ -85,6 +85,7 @@ export default function ListPage() {
 
   return (
     <div className="p-8 max-w-5xl mx-auto">
+      <div className="w-full flex gap-16 justify-between mb-4">
       <h2 className="text-2xl font-bold mb-4">{list?.name || "Loading..."}</h2>
       <button
         onClick={handleDeleteList}
@@ -92,6 +93,7 @@ export default function ListPage() {
       >
         Delete List
       </button>
+      </div>
       {games.length === 0 ? (
         <p className="text-gray-500">The list is empty. Add some games!</p>
       ) : (
