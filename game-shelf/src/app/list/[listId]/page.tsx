@@ -1,22 +1,19 @@
 "use client"
 /* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { deleteList, getListById, updateList } from "@/services/lists/listsService";
 import { Game, List } from "@/interfaces/interfaces";
 
 
-interface ListPageProps {
-  params: { listId: string };
-}
-
-export default function ListPage({ params }: ListPageProps) {
-  const { listId } = params;
+export default function ListPage() {
+  const path = usePathname()
+  const listId = path.split('/')[2]
   const router = useRouter();
   const [list, setList] = useState<List | null>(null);
   const [games, setGames] = useState<Game[]>([]);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-
+  console.log(listId)
   const showFeedback = (message: string) => {
     setFeedbackMessage(message);
     setTimeout(() => setFeedbackMessage(null), 3000);

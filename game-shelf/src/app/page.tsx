@@ -13,7 +13,7 @@ export default async function Home() {
       <h1 className="text-3xl">Welcome back, {users[0].name}!</h1>
       <SearchInput/>
       {lists?.map((list) => (
-  <div key={list.id}>
+  <div key={list.id}  className="w-full">
     <GameList id={list.id} name={list.name} game={list.game}></GameList>
   </div>
 ))}
