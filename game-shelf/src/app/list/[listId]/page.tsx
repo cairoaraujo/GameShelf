@@ -3,13 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { deleteList, getListById, updateList } from "@/services/lists/listsService";
-import { List } from "@/models/list";
+import { Game, List } from "@/interfaces/interfaces";
 
-interface Game {
-  id: number;
-  name: string;
-  background_image: string;
-}
 
 interface ListPageProps {
   params: { listId: string };

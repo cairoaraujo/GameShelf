@@ -7,30 +7,28 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
+import { Game, List } from "@/interfaces/interfaces";
 
-interface Game {
-  id: number;
-  name: string;
-  background_image: string;
-}
 
-export default function GameList({listId, listTitle, gameList }: { listId: number, listTitle: string; gameList: string }) {
+export default function GameList({id, name, game }: Partial<List>) {
   const [addedGames, setAddedGames] = useState<Game[]>([]);
   const router = useRouter();
 
   useEffect(() => {
     try {
-      const parsedGameList = JSON.parse(gameList);
-      if (Array.isArray(parsedGameList)) {
-        setAddedGames(parsedGameList);
+      if (game){
+        const parsedGameList = JSON.parse(game);
+        if (Array.isArray(parsedGameList)) {
+          setAddedGames(parsedGameList);
+        }
       }
     } catch (error) {
       console.error("Error", error);
     }
-  }, [gameList]);
+  }, [game]);
 
   const handleTitleClick = () => {
-    router.push(`/list/${listId}`);
+    router.push(`/list/${id}`);
   };
 
   return (
@@ -40,7 +38,7 @@ export default function GameList({listId, listTitle, gameList }: { listId: numbe
           className="text-2xl font-bold mb-4 text-left flex items-center cursor-pointer hover:underline"
           onClick={handleTitleClick}
         >
-          {listTitle}
+          {name}
           {addedGames.length !== 0 && (
             <span className="ml-2 text-lg text-gray-500">({addedGames.length} games)</span>
           )}

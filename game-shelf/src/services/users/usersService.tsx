@@ -1,10 +1,6 @@
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-  }
-  
-  export async function fetchUsers(): Promise<User[]> {
+import { User } from "@/interfaces/interfaces";
+
+    export async function fetchUsers(): Promise<User[]> {
     try {
       const response = await fetch("https://games-shelf-api.fly.dev/users", {
         method: "GET",

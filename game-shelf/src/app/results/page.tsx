@@ -5,20 +5,8 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { getAllListsByUser, getListById, updateList } from "@/services/lists/listsService";
 import { useSearchParams } from "next/navigation";
+import { Game, List } from "@/interfaces/interfaces";
 
-interface Game {
-  id: number;
-  name: string;
-  released: string;
-  background_image: string;
-  tags: { id: number; name: string }[];
-}
-
-interface List {
-  id: number;
-  name: string;
-  game: string | null;
-}
 
 async function fetchGames(query: string): Promise<Game[]> {
   const response = await fetch(
