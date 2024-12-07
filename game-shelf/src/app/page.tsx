@@ -12,6 +12,7 @@ export default async function Home() {
     <div className="flex flex-col grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-4 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <h1 className="text-3xl">Welcome back, {users[0].name}!</h1>
       <SearchInput/>
+      <h1 className="text-3xl w-[1000px]">My lists</h1>
       {lists?.map((list) => (
   <div key={list.id}  className="w-full">
     <GameList id={list.id} name={list.name} game={list.game}></GameList>
